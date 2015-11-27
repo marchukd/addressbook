@@ -6,14 +6,19 @@ import com.thoughtworks.selenium.Selenium;
  * Created by Dmytro on 26.11.2015.
  */
 public class AbonentManager {
-    public static String wait = "30000";
+    Selenium selenium;
+    public String wait = "30000";
 
-    public static int getRecordsCount(Selenium selenium) {
+    public AbonentManager(Selenium selenium) {
+        this.selenium = selenium;
+    }
+
+    public int getRecordsCount() {
         selenium.waitForPageToLoad(wait);
         return selenium.getXpathCount("//input[@type='checkbox']").intValue();
     }
 
-    static void clickHome(Selenium selenium) {
+    public void gotoHomePage() {
         selenium.open("/");
         selenium.click("link=home");
         selenium.waitForPageToLoad("30000");

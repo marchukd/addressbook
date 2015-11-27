@@ -10,12 +10,9 @@ public class AddGroup extends SeleneseTestCase {
     GroupManager manager;
     Selenium selenium;
 
-    public AddGroup(Selenium selenium) {
-        this.selenium = selenium;
-    }
-
     public void setUp() throws Exception {
         setUp("http://addressbook/", "*chrome");
+        this.selenium = super.selenium;
     }
 
     public void addGroup(GroupData data) throws Exception {
@@ -24,7 +21,7 @@ public class AddGroup extends SeleneseTestCase {
         manager.gotoGroupPage();
 
         manager.addGroup(data);
-
+        selenium.waitForPageToLoad("30000");
         assertTrue(manager.isTextExist(data.name));
     }
 

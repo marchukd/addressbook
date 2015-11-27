@@ -14,7 +14,9 @@ public class EditGroup extends SeleneseTestCase {
         manager.gotoGroupPage();
 
         GroupData gData = manager.getTestGroupData();
-        new AddGroup(selenium).addGroup(gData);
+        AddGroup addGroup = new AddGroup();
+        addGroup.selenium = selenium;
+        addGroup.addGroup(gData);
 
         selenium.click("xpath=(//input[contains(@title, 'Select (" + manager.getTestGroupData().name + ")')])");
         selenium.click("name=edit");

@@ -7,7 +7,7 @@ import com.thoughtworks.selenium.Selenium;
 /**
  * Created by Dmytro on 16.11.2015.
  */
-public class GroupManager extends SeleneseTestCase {
+public class GroupManager {
     Selenium selenium;
 
     GroupManager(Selenium selenium) {
@@ -19,11 +19,6 @@ public class GroupManager extends SeleneseTestCase {
         selenium.click("link=groups");
         selenium.waitForPageToLoad("30000");
     }
-
-    public void setUp() throws Exception {
-        setUp("http://addressbook/", "*chrome");
-    }
-
 
     void addGroup(GroupData data) {
         selenium.click("name=new");
@@ -51,6 +46,7 @@ public class GroupManager extends SeleneseTestCase {
     }
 
     boolean isTextExist(String text) {
+        //selenium.waitForPageToLoad("30000");
         return selenium.isTextPresent(text);
     }
 

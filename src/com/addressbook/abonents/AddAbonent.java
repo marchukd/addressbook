@@ -4,40 +4,50 @@ import com.thoughtworks.selenium.*;
 import org.junit.Test;
 
 public class AddAbonent extends SeleneseTestCase {
+    private AbonentManager manager;
     private Selenium selenium;
 
     public AddAbonent(Selenium selenium) {
+        super();
         this.selenium = selenium;
     }
 
+    public AddAbonent(String name) {
+        super(name);
+    }
+
     private String wait = "30000";
-    private int countAddMultipleAbonent = 3;
+    private int countAddMultipleAbonent = 2;
 
     public void setUp() throws Exception {
         setUp("http://addressbook/", "*chrome");
+        this.selenium = super.selenium;
     }
 
     @Test
     public void testAddSingleAbonent() throws Exception {
-        AbonentManager.clickHome(selenium);
-        int recordSizeBefore = AbonentManager.getRecordsCount(selenium);
-        AddNewAbonent();
-        assertEquals(AbonentManager.getRecordsCount(selenium), recordSizeBefore + 1);
+        manager = new AbonentManager(selenium);
+
+        manager.gotoHomePage();
+        int recordSizeBefore = manager.getRecordsCount();
+        addAbonent();
+        assertEquals(manager.getRecordsCount(), recordSizeBefore + 1);
     }
 
     @Test
     public void testAddMultipleAbonents() throws Exception {
-        AbonentManager.clickHome(selenium);
-        int recordSizeBefore = AbonentManager.getRecordsCount(selenium);
+        manager = new AbonentManager(selenium);
+        manager.gotoHomePage();
+        int recordSizeBefore = manager.getRecordsCount();
         for (int i = 0; i < countAddMultipleAbonent; i++) {
-            AddNewAbonent();
+            addAbonent();
         }
-        assertEquals(AbonentManager.getRecordsCount(selenium), recordSizeBefore + countAddMultipleAbonent);
+        assertEquals(manager.getRecordsCount(), recordSizeBefore + countAddMultipleAbonent);
     }
 
-    public void AddNewAbonent() {
+    public void addAbonent() {
         openAddNewPage();
-        AbonentData data = getAbonentData();
+        AbonentData data = getTestAbonentData();
         fillForm(data);
         clickSubmit();
     }
@@ -73,7 +83,7 @@ public class AddAbonent extends SeleneseTestCase {
         selenium.waitForPageToLoad(wait);
     }
 
-    public AbonentData getAbonentData() {
+    public AbonentData getTestAbonentData() {
         AbonentData aData = new AbonentData();
         aData.firstName = "Dima";
         aData.lastName = "Marchuk";

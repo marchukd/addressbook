@@ -3,15 +3,16 @@ package com.addressbook.abonents;
 import com.thoughtworks.selenium.*;
 
 import java.util.Random;
-import java.util.regex.Pattern;
 
 public class EditAbonent extends SeleneseTestCase {
+    AbonentManager manager;
     public void setUp() throws Exception {
         setUp("http://addressbook/", "*chrome");
     }
 
     public void testEditAbonent() throws Exception {
-        AbonentManager.clickHome(selenium);
+        manager = new AbonentManager(selenium);
+        manager.gotoHomePage();
 
         selenium.click("css=img[alt=\"Edit\"]");
         selenium.waitForPageToLoad("30000");
