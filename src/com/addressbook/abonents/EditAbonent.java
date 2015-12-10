@@ -1,17 +1,21 @@
 package com.addressbook.abonents;
 
+import com.addressbook.AppManager;
 import com.thoughtworks.selenium.*;
 
 import java.util.Random;
 
 public class EditAbonent extends SeleneseTestCase {
-    AbonentManager manager;
+    AppManager manager;
+
     public void setUp() throws Exception {
         setUp("http://addressbook/", "*chrome");
     }
 
     public void testEditAbonent() throws Exception {
-        manager = new AbonentManager(selenium);
+        manager = new AppManager(selenium);
+        manager.gotoHomePage();
+        new AddAbonent(selenium).testAddSingleAbonent();
         manager.gotoHomePage();
 
         selenium.click("css=img[alt=\"Edit\"]");

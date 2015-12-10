@@ -1,23 +1,24 @@
 package com.addressbook.groups;
 
+import com.addressbook.AppManager;
 import com.thoughtworks.selenium.*;
 
 public class EditGroup extends SeleneseTestCase {
-    GroupManager manager;
+    AppManager manager;
 
     public void setUp() throws Exception {
         setUp("http://addressbook/", "*chrome");
     }
 
     public void testEditGroup() throws Exception {
-        manager = new GroupManager(selenium);
+        manager = new AppManager(selenium);
         manager.gotoGroupPage();
 
         GroupData gData = manager.getTestGroupData();
-        AddGroup addGroup = new AddGroup();
+        AddGroup addGroup = new AddGroup(selenium);
         addGroup.selenium = selenium;
-        addGroup.addGroup(gData);
-
+        manager.addGroup(gData);
+        manager.gotoGroupPage();
         selenium.click("xpath=(//input[contains(@title, 'Select (" + manager.getTestGroupData().name + ")')])");
         selenium.click("name=edit");
         selenium.waitForPageToLoad("30000");
